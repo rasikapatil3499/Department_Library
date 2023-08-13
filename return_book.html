@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Return Book</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <ul class="navbar">
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="add_book.html">Add Book</a></li>
+      <li><a href="update_book.html">Update Status</a></li>
+      <li><a href="delete_book.html">Delete Book</a></li>
+      <li><a href="issue_book.html">Issue Book</a></li>
+      <li><a href="return_book.html">Return Book</a></li>
+      <li><a href="loans.php">Book Issued</a></li>
+      <li><a href="book_detail.php">Book Details</a></li>
+    </ul>
+
+    <form action="return_book.php" method="post" class="p-4 custom-border">
+      <label for="loan_id">Loan ID:</label>
+      <input type="number" name="loan_id" required />
+      <br />
+      <label for="return_date">Return Date:</label>
+      <input type="date" name="return_date" required />
+      <br />
+      <input type="submit" class="custom-button" value="Return Book" />
+    </form>
+  </body>
+</html>

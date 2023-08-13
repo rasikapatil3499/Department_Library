@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Book Details</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <ul class="navbar">
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="add_book.html">Add Book</a></li>
+      <li><a href="update_book.html">Update Status</a></li>
+      <li><a href="delete_book.html">Delete Book</a></li>
+      <li><a href="issue_book.html">Issue Book</a></li>
+      <li><a href="return_book.html">Return Book</a></li>
+      <li><a href="book_details.html">Book Details</a></li>
+    </ul>
+
+    <h1>All Data from Library</h1>
+    <table border="1">
+      <thead>
+        <!-- Table header will be added dynamically -->
+      </thead>
+      <tbody id="tableData">
+        <!-- Table data will be added here dynamically -->
+      </tbody>
+    </table>
+
+    <script>
+      // Fetch all data from PHP using jQuery
+      $.getJSON("book_details.php", function (data) {
+        var tableHeader = "<tr>";
+        $.each(data[0], function (key, value) {
+          tableHeader += "<th>" + key + "</th>";
+        });
+        tableHeader += "</tr>";
+        $("#tableData").append(tableHeader);
+
+        $.each(data, function (index, row) {
+          var tableRow = "<tr>";
+          $.each(row, function (key, value) {
+            tableRow += "<td>" + value + "</td>";
+          });
+          tableRow += "</tr>";
+          $("#tableData").append(tableRow);
+        });
+      });
+    </script>
+  </body>
+</html>

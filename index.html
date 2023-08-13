@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Library Management System</h1>
+    <!-- Navigation Bar -->
+    <ul class="navbar">
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="add_book.html">Add Book</a></li>
+      <li><a href="update_book.html">Update Status</a></li>
+      <li><a href="delete_book.html">Delete Book</a></li>
+      <li><a href="issue_book.html">Issue Book</a></li>
+      <li><a href="return_book.html">Return Book</a></li>
+      <li><a href="loans.php">Book Issued</a></li>
+      <li><a href="book_detail.php">Book Details</a></li>
+    </ul>
+
+    <div id="statistics" class="p-4 mb-3 custom-border">
+      <script>
+        // Fetch statistics from the PHP file
+        fetch("library_statistics.php")
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the HTML content with statistics
+            const statisticsDiv = document.getElementById("statistics");
+            statisticsDiv.innerHTML = `
+                    <p>Total Books: ${data.totalBooks}</p>
+                    <p>Available Books: ${data.availableBooks}</p>
+                    <p>Borrowed Books: ${data.borrowedBooks}</p>
+                `;
+          })
+          .catch((error) => {
+            console.error("Error fetching statistics:", error);
+          });
+      </script>
+    </div>
+    <br />
+
+    <div id="borrowers" class="p-4 custom-border">
+      <h2>List of Borrowers</h2>
+      <ul id="borrowersList">
+        <li>Loading borrowers...</li>
+      </ul>
+      <p id="maxBorrower">Loading borrower with maximum borrowing count...</p>
+    </div>
+
+    <script>
+      // Fetch statistics from the PHP file
+      fetch("library_statistics.php")
+        .then((response) => response.json())
+        .then((data) => {
+          // Update the HTML content with statistics
+          const statisticsDiv = document.getElementById("statistics");
+          statisticsDiv.innerHTML = `
+                    <p>Total Books: ${data.totalBooks}</p>
+                    <p>Available Books: ${data.availableBooks}</p>
+                    <p>Borrowed Books: ${data.borrowedBooks}</p>
+                `;
+        })
+        .catch((error) => {
+          console.error("Error fetching statistics:", error);
+        });
+
+      // Fetch borrowers' borrowing counts from the PHP file
+      fetch("borrowers_list.php")
+        .then((response) => response.json())
+        .then((data) => {
+          // Sort borrowers by borrowing count in descending order
+          data.sort((a, b) => b.borrowing_count - a.borrowing_count);
+
+          // Get the borrower with the highest borrowing count
+          const highestBorrower = data[0];
+
+          // Update the HTML content with the sorted list of borrowers and highest borrower
+          const borrowersList = document.getElementById("borrowersList");
+          borrowersList.innerHTML = "";
+          data.forEach((borrower) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${borrower.borrower_name} :  ${borrower.borrowing_count} times`;
+            borrowersList.appendChild(listItem);
+          });
+
+          // Update the HTML content with the highest borrower information
+          const maxBorrowerElement = document.getElementById("maxBorrower");
+          maxBorrowerElement.textContent = `Borrower with maximum borrowing count: ${highestBorrower.borrower_name}`;
+        })
+        .catch((error) => {
+          console.error("Error fetching borrowers list:", error);
+        });
+    </script>
+  </body>
+</html>
